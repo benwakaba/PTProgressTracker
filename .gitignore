@@ -1,0 +1,18 @@
+# Xcode
+build/
+DerivedData/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+.swiftpm/
+
+# CocoaPods / SPM (not used, but harmless to ignore)
+Pods/
+
+# macOS
+.DS_Store
