@@ -1,0 +1,2929 @@
+{
+ "generatedBy": "MLTraining/make_parity_fixture.py",
+ "calendar": "gregorian, UTC",
+ "cases": [
+  {
+   "name": "two logs: no prediction",
+   "today": "2024-01-02T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    }
+   ],
+   "expected": null
+  },
+  {
+   "name": "three logs on consecutive days",
+   "today": "2024-01-03T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-01-03T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 2
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 2,
+    "adherenceRatio": 0.42857142857142855,
+    "avgPainLast7": 4.0,
+    "painTrend": -3.0,
+    "completionRatio": 1.0,
+    "currentStreak": 3
+   }
+  },
+  {
+   "name": "streak survives until the end of today",
+   "today": "2024-01-05T20:00:00Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-03T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-04T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 4,
+    "adherenceRatio": 0.5714285714285714,
+    "avgPainLast7": 5.0,
+    "painTrend": 0.0,
+    "completionRatio": 1.0,
+    "currentStreak": 4
+   }
+  },
+  {
+   "name": "a missed day breaks the streak",
+   "today": "2024-01-05T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-04T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-05T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 4,
+    "adherenceRatio": 0.5714285714285714,
+    "avgPainLast7": 5.0,
+    "painTrend": 0.0,
+    "completionRatio": 1.0,
+    "currentStreak": 2
+   }
+  },
+  {
+   "name": "several logs a day count once",
+   "today": "2024-01-02T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T08:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-01-01T08:03:00Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-02T19:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-02T19:03:00Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 1,
+    "adherenceRatio": 0.2857142857142857,
+    "avgPainLast7": 5.0,
+    "painTrend": -1.0,
+    "completionRatio": 1.0,
+    "currentStreak": 2
+   }
+  },
+  {
+   "name": "average pain uses the last seven logs, not days",
+   "today": "2024-01-04T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 9
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 9
+    },
+    {
+     "timestamp": "2024-01-03T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 9
+    },
+    {
+     "timestamp": "2024-01-04T08:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-01-04T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-01-04T10:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-01-04T11:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-01-04T12:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-04T13:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-01-04T14:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 7
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 3,
+    "adherenceRatio": 0.5714285714285714,
+    "avgPainLast7": 4.0,
+    "painTrend": -1.0,
+    "completionRatio": 1.0,
+    "currentStreak": 4
+   }
+  },
+  {
+   "name": "pain trend with an odd number of logs",
+   "today": "2024-01-05T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 8
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-01-03T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-04T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-01-05T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 4,
+    "adherenceRatio": 0.7142857142857143,
+    "avgPainLast7": 5.4,
+    "painTrend": -3.5,
+    "completionRatio": 1.0,
+    "currentStreak": 5
+   }
+  },
+  {
+   "name": "unknown exercise counts as full completion",
+   "today": "2024-01-03T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 6,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-03T09:00:00Z",
+     "exerciseID": "not-in-library",
+     "reps": 3,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 2,
+    "adherenceRatio": 0.42857142857142855,
+    "avgPainLast7": 5.0,
+    "painTrend": 0.0,
+    "completionRatio": 0.8333333333333334,
+    "currentStreak": 3
+   }
+  },
+  {
+   "name": "days since start counts whole days",
+   "today": "2024-01-07T17:59:00Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T18:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-03T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 5,
+    "adherenceRatio": 0.42857142857142855,
+    "avgPainLast7": 5.0,
+    "painTrend": 0.0,
+    "completionRatio": 1.0,
+    "currentStreak": 0
+   }
+  },
+  {
+   "name": "first day never reports zero days",
+   "today": "2024-01-01T11:00:00Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T08:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-01T10:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 1,
+    "adherenceRatio": 0.14285714285714285,
+    "avgPainLast7": 5.0,
+    "painTrend": 0.0,
+    "completionRatio": 1.0,
+    "currentStreak": 1
+   }
+  },
+  {
+   "name": "adherence window is today and the six days before",
+   "today": "2024-01-16T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-04T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-10T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-11T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-01-16T09:00:00Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 15,
+    "adherenceRatio": 0.42857142857142855,
+    "avgPainLast7": 5.0,
+    "painTrend": 0.0,
+    "completionRatio": 1.0,
+    "currentStreak": 1
+   }
+  },
+  {
+   "name": "reps above target",
+   "today": "2024-01-03T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-01-01T09:00:00Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 20,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-01-02T09:00:00Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 20,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-01-03T09:00:00Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 20,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 2,
+    "adherenceRatio": 0.42857142857142855,
+    "avgPainLast7": 3.0,
+    "painTrend": 0.0,
+    "completionRatio": 2.0,
+    "currentStreak": 3
+   }
+  },
+  {
+   "name": "simulated patient 266, week 3",
+   "today": "2025-02-05T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-01-16T15:49:39Z",
+     "exerciseID": "glute-bridge",
+     "reps": 9,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-01-16T15:52:40Z",
+     "exerciseID": "clamshell",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-01-17T15:15:52Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-18T14:52:22Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-01-18T14:54:36Z",
+     "exerciseID": "clamshell",
+     "reps": 13,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-01-19T16:56:00Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-01-19T16:59:06Z",
+     "exerciseID": "clamshell",
+     "reps": 13,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-01-20T16:27:05Z",
+     "exerciseID": "glute-bridge",
+     "reps": 11,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-01-20T16:29:58Z",
+     "exerciseID": "clamshell",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-21T15:04:04Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-01-22T15:45:59Z",
+     "exerciseID": "glute-bridge",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-01-23T14:52:05Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-24T18:05:09Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-24T18:07:18Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-26T16:50:29Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-01-26T16:53:24Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-27T16:14:33Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-27T16:17:22Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-28T13:44:29Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-28T13:47:55Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-01-29T14:07:08Z",
+     "exerciseID": "glute-bridge",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-01-29T14:10:10Z",
+     "exerciseID": "clamshell",
+     "reps": 14,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-01-30T15:28:17Z",
+     "exerciseID": "glute-bridge",
+     "reps": 13,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-01-30T15:30:56Z",
+     "exerciseID": "clamshell",
+     "reps": 16,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-01-31T14:43:11Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-01-31T14:46:07Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-02-01T14:25:53Z",
+     "exerciseID": "glute-bridge",
+     "reps": 13,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-02-01T14:28:35Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-02-02T16:27:56Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-02-05T13:08:02Z",
+     "exerciseID": "glute-bridge",
+     "reps": 13,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-02-05T13:11:36Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 1
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 20,
+    "adherenceRatio": 0.7142857142857143,
+    "avgPainLast7": 3.0,
+    "painTrend": -1.3291666666666666,
+    "completionRatio": 0.9731182795698924,
+    "currentStreak": 1
+   }
+  },
+  {
+   "name": "simulated patient 87, week 3",
+   "today": "2024-04-29T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-04-09T10:44:55Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-09T10:47:29Z",
+     "exerciseID": "wall-slide",
+     "reps": 9,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-04-10T10:57:09Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-11T09:00:09Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-11T09:02:35Z",
+     "exerciseID": "wall-slide",
+     "reps": 7,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-12T11:35:42Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-04-13T10:05:02Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-13T10:07:29Z",
+     "exerciseID": "wall-slide",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-14T11:20:47Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-14T11:24:16Z",
+     "exerciseID": "wall-slide",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-15T09:11:57Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-15T09:14:40Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-16T09:39:36Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-17T10:10:03Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-04-17T10:12:38Z",
+     "exerciseID": "wall-slide",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-18T10:21:49Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-04-19T10:31:47Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-19T10:34:27Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-20T09:16:27Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-20T09:19:42Z",
+     "exerciseID": "wall-slide",
+     "reps": 11,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-21T10:14:49Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-21T10:18:10Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-22T10:36:59Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-22T10:40:37Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-23T09:17:14Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-23T09:19:49Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-24T09:02:31Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 11,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-24T09:05:42Z",
+     "exerciseID": "wall-slide",
+     "reps": 11,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-25T12:44:43Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-25T12:47:39Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-26T08:07:50Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-26T08:11:21Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-04-27T08:46:08Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-27T08:49:25Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-28T11:53:21Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-28T11:56:24Z",
+     "exerciseID": "wall-slide",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-04-29T08:01:14Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-04-29T08:04:29Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 20,
+    "adherenceRatio": 1.0,
+    "avgPainLast7": 2.2857142857142856,
+    "painTrend": -1.0526315789473681,
+    "completionRatio": 0.9526315789473687,
+    "currentStreak": 21
+   }
+  },
+  {
+   "name": "simulated patient 76, week 1",
+   "today": "2025-04-23T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-04-17T09:11:12Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 7,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-04-17T09:14:45Z",
+     "exerciseID": "glute-bridge",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-04-18T09:15:34Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-04-18T09:18:47Z",
+     "exerciseID": "glute-bridge",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-04-19T09:06:25Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 7,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-04-19T09:09:32Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-04-20T09:19:03Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-04-20T09:22:06Z",
+     "exerciseID": "glute-bridge",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-04-21T07:38:58Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-04-21T07:41:33Z",
+     "exerciseID": "glute-bridge",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-04-23T10:38:27Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-04-23T10:41:19Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 6,
+    "adherenceRatio": 0.8571428571428571,
+    "avgPainLast7": 4.0,
+    "painTrend": -1.1666666666666665,
+    "completionRatio": 0.8444444444444446,
+    "currentStreak": 1
+   }
+  },
+  {
+   "name": "simulated patient 280, week 1",
+   "today": "2025-08-07T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-08-03T07:06:25Z",
+     "exerciseID": "knee-extension",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-08-03T07:09:21Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 6
+    }
+   ],
+   "expected": null
+  },
+  {
+   "name": "simulated patient 144, week 1",
+   "today": "2024-04-16T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-04-11T16:03:10Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-04-11T16:06:31Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-04-15T19:37:58Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-04-15T19:41:11Z",
+     "exerciseID": "wall-slide",
+     "reps": 9,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-04-16T15:29:28Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-04-16T15:33:14Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 5,
+    "adherenceRatio": 0.42857142857142855,
+    "avgPainLast7": 5.166666666666667,
+    "painTrend": -1.666666666666667,
+    "completionRatio": 0.8666666666666667,
+    "currentStreak": 2
+   }
+  },
+  {
+   "name": "simulated patient 178, week 1",
+   "today": "2024-03-31T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-03-25T09:20:18Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 8
+    },
+    {
+     "timestamp": "2024-03-25T09:23:35Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-03-27T10:43:40Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-29T10:47:03Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-03-30T10:50:11Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 9
+    },
+    {
+     "timestamp": "2024-03-30T10:52:18Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 7
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 6,
+    "adherenceRatio": 0.5714285714285714,
+    "avgPainLast7": 6.666666666666667,
+    "painTrend": -0.666666666666667,
+    "completionRatio": 0.7833333333333333,
+    "currentStreak": 2
+   }
+  },
+  {
+   "name": "simulated patient 167, week 4",
+   "today": "2025-03-13T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-02-19T19:37:19Z",
+     "exerciseID": "knee-extension",
+     "reps": 7,
+     "painLevel": 8
+    },
+    {
+     "timestamp": "2025-02-19T19:40:19Z",
+     "exerciseID": "heel-slide",
+     "reps": 6,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-02T20:12:55Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-02T20:16:16Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 22,
+    "adherenceRatio": 0.0,
+    "avgPainLast7": 4.75,
+    "painTrend": -1.5,
+    "completionRatio": 0.7708333333333334,
+    "currentStreak": 0
+   }
+  },
+  {
+   "name": "simulated patient 286, week 3",
+   "today": "2025-09-27T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-09-07T14:09:27Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 5,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-09-07T14:12:46Z",
+     "exerciseID": "glute-bridge",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-09-08T12:59:22Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 5,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-09-08T13:02:22Z",
+     "exerciseID": "glute-bridge",
+     "reps": 9,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-09-10T09:52:56Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 7,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-09-10T09:56:14Z",
+     "exerciseID": "glute-bridge",
+     "reps": 8,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-09-16T13:05:48Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-09-16T13:08:47Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-09-26T14:10:13Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-09-26T14:13:15Z",
+     "exerciseID": "glute-bridge",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-09-27T13:46:25Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 20,
+    "adherenceRatio": 0.2857142857142857,
+    "avgPainLast7": 4.0,
+    "painTrend": -1.1666666666666665,
+    "completionRatio": 0.7757575757575758,
+    "currentStreak": 2
+   }
+  },
+  {
+   "name": "simulated patient 179, week 4",
+   "today": "2025-05-25T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-04-28T12:54:43Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-04-28T12:58:18Z",
+     "exerciseID": "heel-slide",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-04-29T09:57:36Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-04-29T10:01:21Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-04-30T14:55:24Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-04-30T14:58:39Z",
+     "exerciseID": "heel-slide",
+     "reps": 11,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-05-01T12:43:43Z",
+     "exerciseID": "knee-extension",
+     "reps": 13,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-05-01T12:46:31Z",
+     "exerciseID": "heel-slide",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-06T10:36:26Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-06T10:39:23Z",
+     "exerciseID": "heel-slide",
+     "reps": 13,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-07T14:30:59Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-05-08T11:56:15Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-05-08T11:59:25Z",
+     "exerciseID": "heel-slide",
+     "reps": 14,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-09T11:04:13Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-09T11:07:19Z",
+     "exerciseID": "heel-slide",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-10T13:27:28Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-05-10T13:30:19Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-11T09:53:17Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-11T09:55:41Z",
+     "exerciseID": "heel-slide",
+     "reps": 13,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-05-12T13:06:35Z",
+     "exerciseID": "knee-extension",
+     "reps": 13,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-12T13:09:24Z",
+     "exerciseID": "heel-slide",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-05-13T10:07:18Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-13T10:10:26Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-05-15T10:26:58Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-05-15T10:30:20Z",
+     "exerciseID": "heel-slide",
+     "reps": 15,
+     "painLevel": 6
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 27,
+    "adherenceRatio": 0.0,
+    "avgPainLast7": 4.571428571428571,
+    "painTrend": 0.02564102564102555,
+    "completionRatio": 1.0099999999999998,
+    "currentStreak": 0
+   }
+  },
+  {
+   "name": "simulated patient 188, week 2",
+   "today": "2025-10-04T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-09-22T14:31:20Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-09-22T14:34:57Z",
+     "exerciseID": "wall-slide",
+     "reps": 6,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-09-23T12:35:07Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-09-23T12:38:27Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 9
+    },
+    {
+     "timestamp": "2025-09-24T12:48:16Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-09-24T12:51:16Z",
+     "exerciseID": "wall-slide",
+     "reps": 7,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-09-25T10:11:06Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-09-25T10:14:50Z",
+     "exerciseID": "wall-slide",
+     "reps": 6,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-09-26T11:45:45Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-09-26T11:48:44Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-09-27T12:43:10Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 6,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-09-27T12:46:10Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-09-28T13:10:55Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 6,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-09-30T09:38:59Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-09-30T09:41:54Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-10-02T12:54:25Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 8,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-10-02T12:57:05Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-10-04T11:12:03Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 5
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 12,
+    "adherenceRatio": 0.5714285714285714,
+    "avgPainLast7": 6.0,
+    "painTrend": -0.8888888888888884,
+    "completionRatio": 0.8055555555555557,
+    "currentStreak": 1
+   }
+  },
+  {
+   "name": "simulated patient 50, week 4",
+   "today": "2024-08-24T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-08-01T11:13:51Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-01T11:17:09Z",
+     "exerciseID": "glute-bridge",
+     "reps": 11,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-08-04T11:18:53Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-04T11:22:16Z",
+     "exerciseID": "glute-bridge",
+     "reps": 13,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-08-05T11:07:01Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-05T11:10:24Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-08-09T10:22:16Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-09T10:25:26Z",
+     "exerciseID": "glute-bridge",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-14T11:44:53Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-14T11:47:53Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-15T09:35:01Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-15T09:38:17Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-08-16T13:45:00Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-16T13:47:30Z",
+     "exerciseID": "glute-bridge",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-08-20T11:56:39Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 11,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-08-20T11:59:33Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-08-21T11:44:10Z",
+     "exerciseID": "pelvic-tilt",
+     "reps": 11,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-08-21T11:47:02Z",
+     "exerciseID": "glute-bridge",
+     "reps": 14,
+     "painLevel": 1
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 23,
+    "adherenceRatio": 0.2857142857142857,
+    "avgPainLast7": 2.142857142857143,
+    "painTrend": -0.33333333333333304,
+    "completionRatio": 0.9981481481481482,
+    "currentStreak": 0
+   }
+  },
+  {
+   "name": "simulated patient 235, week 4",
+   "today": "2024-12-08T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-11-11T16:45:11Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-11-11T16:47:47Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-11-18T18:31:34Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-11-18T18:34:21Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 6
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 27,
+    "adherenceRatio": 0.0,
+    "avgPainLast7": 5.5,
+    "painTrend": 1.0,
+    "completionRatio": 0.875,
+    "currentStreak": 0
+   }
+  },
+  {
+   "name": "simulated patient 187, week 2",
+   "today": "2025-06-03T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-05-22T14:52:55Z",
+     "exerciseID": "knee-extension",
+     "reps": 7,
+     "painLevel": 9
+    },
+    {
+     "timestamp": "2025-05-23T15:47:45Z",
+     "exerciseID": "knee-extension",
+     "reps": 7,
+     "painLevel": 8
+    },
+    {
+     "timestamp": "2025-05-24T16:35:41Z",
+     "exerciseID": "knee-extension",
+     "reps": 9,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-05-24T16:38:34Z",
+     "exerciseID": "heel-slide",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-05-25T12:35:17Z",
+     "exerciseID": "heel-slide",
+     "reps": 7,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-05-26T15:09:19Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-05-26T15:12:44Z",
+     "exerciseID": "heel-slide",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-05-29T13:28:29Z",
+     "exerciseID": "knee-extension",
+     "reps": 9,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-05-29T13:30:50Z",
+     "exerciseID": "heel-slide",
+     "reps": 7,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-05-30T17:40:30Z",
+     "exerciseID": "knee-extension",
+     "reps": 8,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-05-30T17:43:19Z",
+     "exerciseID": "heel-slide",
+     "reps": 9,
+     "painLevel": 4
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 12,
+    "adherenceRatio": 0.2857142857142857,
+    "avgPainLast7": 6.142857142857143,
+    "painTrend": -0.4333333333333327,
+    "completionRatio": 0.6893939393939394,
+    "currentStreak": 0
+   }
+  },
+  {
+   "name": "simulated patient 4, week 3",
+   "today": "2024-06-28T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-06-08T11:54:03Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-06-08T11:56:42Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-06-09T09:46:40Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 6,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-06-09T09:50:12Z",
+     "exerciseID": "wall-slide",
+     "reps": 6,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-10T10:45:28Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-06-10T10:48:57Z",
+     "exerciseID": "wall-slide",
+     "reps": 7,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-12T09:47:22Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-06-14T10:11:36Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-06-14T10:13:58Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-06-15T08:47:09Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-06-15T08:50:21Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-16T11:41:46Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-06-16T11:44:19Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-18T08:03:44Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-18T08:07:09Z",
+     "exerciseID": "wall-slide",
+     "reps": 7,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-21T13:32:42Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 7,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-21T13:35:45Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-22T12:33:28Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 9,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-06-22T12:35:32Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-06-24T12:03:40Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-06-24T12:06:50Z",
+     "exerciseID": "wall-slide",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-27T11:24:02Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-06-27T11:27:32Z",
+     "exerciseID": "wall-slide",
+     "reps": 8,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-06-28T13:33:53Z",
+     "exerciseID": "shoulder-flexion",
+     "reps": 10,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-06-28T13:36:56Z",
+     "exerciseID": "wall-slide",
+     "reps": 9,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 20,
+    "adherenceRatio": 0.5714285714285714,
+    "avgPainLast7": 2.0,
+    "painTrend": -1.198717948717949,
+    "completionRatio": 0.86,
+    "currentStreak": 2
+   }
+  },
+  {
+   "name": "simulated patient 162, week 5",
+   "today": "2026-02-02T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-12-31T17:45:48Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-12-31T17:47:53Z",
+     "exerciseID": "clamshell",
+     "reps": 11,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2026-01-03T15:43:57Z",
+     "exerciseID": "glute-bridge",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-03T15:47:27Z",
+     "exerciseID": "clamshell",
+     "reps": 11,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2026-01-04T16:05:15Z",
+     "exerciseID": "glute-bridge",
+     "reps": 8,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-01-04T16:08:02Z",
+     "exerciseID": "clamshell",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-01-05T16:05:55Z",
+     "exerciseID": "glute-bridge",
+     "reps": 8,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-05T16:08:24Z",
+     "exerciseID": "clamshell",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-06T17:05:04Z",
+     "exerciseID": "glute-bridge",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-06T17:07:58Z",
+     "exerciseID": "clamshell",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-07T15:43:03Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-01-07T15:46:10Z",
+     "exerciseID": "clamshell",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-08T16:26:38Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-01-09T14:33:53Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-01-09T14:37:08Z",
+     "exerciseID": "clamshell",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-10T18:33:52Z",
+     "exerciseID": "glute-bridge",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-10T18:36:35Z",
+     "exerciseID": "clamshell",
+     "reps": 13,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-11T17:33:09Z",
+     "exerciseID": "glute-bridge",
+     "reps": 8,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-11T17:36:19Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-01-12T13:53:19Z",
+     "exerciseID": "glute-bridge",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-12T13:56:09Z",
+     "exerciseID": "clamshell",
+     "reps": 11,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-14T16:36:40Z",
+     "exerciseID": "glute-bridge",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-14T16:39:29Z",
+     "exerciseID": "clamshell",
+     "reps": 11,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-15T15:07:44Z",
+     "exerciseID": "clamshell",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-16T15:44:46Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-16T15:47:34Z",
+     "exerciseID": "clamshell",
+     "reps": 14,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2026-01-17T17:12:27Z",
+     "exerciseID": "glute-bridge",
+     "reps": 11,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2026-01-17T17:15:57Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2026-01-18T14:57:50Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2026-01-18T15:00:44Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-01-19T15:52:18Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-19T15:54:33Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2026-01-22T17:28:14Z",
+     "exerciseID": "glute-bridge",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-22T17:31:16Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2026-01-24T16:40:09Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2026-01-24T16:42:35Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2026-01-26T16:37:59Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-28T12:57:29Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-29T17:37:02Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-29T17:39:17Z",
+     "exerciseID": "clamshell",
+     "reps": 14,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-30T17:47:19Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2026-01-31T17:59:30Z",
+     "exerciseID": "glute-bridge",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2026-01-31T18:02:47Z",
+     "exerciseID": "clamshell",
+     "reps": 15,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2026-02-02T16:46:55Z",
+     "exerciseID": "glute-bridge",
+     "reps": 13,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2026-02-02T16:49:33Z",
+     "exerciseID": "clamshell",
+     "reps": 16,
+     "painLevel": 2
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 33,
+    "adherenceRatio": 0.7142857142857143,
+    "avgPainLast7": 3.142857142857143,
+    "painTrend": -1.6699604743083003,
+    "completionRatio": 0.8962962962962964,
+    "currentStreak": 1
+   }
+  },
+  {
+   "name": "simulated patient 21, week 5",
+   "today": "2025-04-01T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-02-26T21:11:03Z",
+     "exerciseID": "knee-extension",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-02-27T18:21:55Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-02-27T18:24:56Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-02-28T18:50:24Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-01T21:48:49Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-01T21:51:40Z",
+     "exerciseID": "heel-slide",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-02T19:22:03Z",
+     "exerciseID": "knee-extension",
+     "reps": 10,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2025-03-02T19:25:19Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-03-03T17:53:58Z",
+     "exerciseID": "knee-extension",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-03T17:56:34Z",
+     "exerciseID": "heel-slide",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-04T21:00:05Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-04T21:03:40Z",
+     "exerciseID": "heel-slide",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-05T19:29:06Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-05T19:32:28Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-08T18:26:28Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-08T18:29:05Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-09T19:01:32Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-09T19:04:26Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-03-11T18:42:26Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-11T18:44:54Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-12T16:27:04Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-03-12T16:29:24Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-13T19:45:37Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-13T19:48:32Z",
+     "exerciseID": "heel-slide",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-14T17:58:45Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-14T18:01:45Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-15T16:55:25Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-15T16:58:11Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-16T19:06:38Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-16T19:09:45Z",
+     "exerciseID": "heel-slide",
+     "reps": 14,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-03-17T20:00:31Z",
+     "exerciseID": "knee-extension",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-17T20:03:43Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-18T16:31:38Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-18T16:35:07Z",
+     "exerciseID": "heel-slide",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-19T21:00:22Z",
+     "exerciseID": "knee-extension",
+     "reps": 14,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-03-19T21:03:21Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2025-03-23T19:21:40Z",
+     "exerciseID": "knee-extension",
+     "reps": 14,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-23T19:24:54Z",
+     "exerciseID": "heel-slide",
+     "reps": 13,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2025-03-24T22:03:29Z",
+     "exerciseID": "heel-slide",
+     "reps": 13,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-03-26T21:49:34Z",
+     "exerciseID": "knee-extension",
+     "reps": 14,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-26T21:52:22Z",
+     "exerciseID": "heel-slide",
+     "reps": 13,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-27T19:13:04Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-27T19:16:55Z",
+     "exerciseID": "heel-slide",
+     "reps": 14,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-28T18:39:56Z",
+     "exerciseID": "knee-extension",
+     "reps": 14,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-28T18:42:30Z",
+     "exerciseID": "heel-slide",
+     "reps": 15,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-29T22:00:04Z",
+     "exerciseID": "knee-extension",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-29T22:03:38Z",
+     "exerciseID": "heel-slide",
+     "reps": 14,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-03-30T15:36:20Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-03-30T15:39:49Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2025-03-31T17:36:05Z",
+     "exerciseID": "knee-extension",
+     "reps": 14,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-03-31T17:39:04Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-04-01T20:37:37Z",
+     "exerciseID": "knee-extension",
+     "reps": 15,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2025-04-01T20:40:30Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 34,
+    "adherenceRatio": 1.0,
+    "avgPainLast7": 2.5714285714285716,
+    "painTrend": -1.4202279202279198,
+    "completionRatio": 1.0172955974842768,
+    "currentStreak": 7
+   }
+  },
+  {
+   "name": "simulated patient 239, week 5",
+   "today": "2025-07-22T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-07-09T07:33:55Z",
+     "exerciseID": "glute-bridge",
+     "reps": 6,
+     "painLevel": 7
+    }
+   ],
+   "expected": null
+  },
+  {
+   "name": "simulated patient 147, week 2",
+   "today": "2024-03-31T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-03-18T12:27:46Z",
+     "exerciseID": "knee-extension",
+     "reps": 4,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-18T12:31:00Z",
+     "exerciseID": "heel-slide",
+     "reps": 7,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-19T16:37:02Z",
+     "exerciseID": "knee-extension",
+     "reps": 6,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-03-19T16:40:03Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-21T13:32:35Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-21T13:35:32Z",
+     "exerciseID": "heel-slide",
+     "reps": 5,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-03-22T14:45:16Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-22T14:48:47Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-24T11:34:35Z",
+     "exerciseID": "knee-extension",
+     "reps": 7,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-03-24T11:37:49Z",
+     "exerciseID": "heel-slide",
+     "reps": 9,
+     "painLevel": 7
+    },
+    {
+     "timestamp": "2024-03-25T13:04:11Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-03-25T13:07:19Z",
+     "exerciseID": "heel-slide",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-03-28T13:57:43Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-03-28T14:00:29Z",
+     "exerciseID": "heel-slide",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-03-29T14:57:20Z",
+     "exerciseID": "knee-extension",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-03-29T14:59:53Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-03-30T14:53:19Z",
+     "exerciseID": "knee-extension",
+     "reps": 10,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-03-30T14:55:45Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-03-31T13:46:41Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-03-31T13:50:31Z",
+     "exerciseID": "heel-slide",
+     "reps": 8,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 13,
+    "adherenceRatio": 0.7142857142857143,
+    "avgPainLast7": 4.285714285714286,
+    "painTrend": -1.8999999999999995,
+    "completionRatio": 0.7916666666666667,
+    "currentStreak": 4
+   }
+  },
+  {
+   "name": "simulated patient 215, week 4",
+   "today": "2025-12-05T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2025-11-11T10:04:57Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-11-11T10:07:07Z",
+     "exerciseID": "heel-slide",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-11-14T11:24:44Z",
+     "exerciseID": "knee-extension",
+     "reps": 8,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-11-15T13:18:04Z",
+     "exerciseID": "knee-extension",
+     "reps": 9,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-11-15T13:21:02Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 8
+    },
+    {
+     "timestamp": "2025-11-16T12:17:32Z",
+     "exerciseID": "knee-extension",
+     "reps": 9,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-11-16T12:20:39Z",
+     "exerciseID": "heel-slide",
+     "reps": 10,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-11-17T13:45:16Z",
+     "exerciseID": "knee-extension",
+     "reps": 10,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2025-11-17T13:47:51Z",
+     "exerciseID": "heel-slide",
+     "reps": 9,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-11-23T11:30:03Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2025-11-23T11:33:04Z",
+     "exerciseID": "heel-slide",
+     "reps": 10,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-11-24T10:28:22Z",
+     "exerciseID": "knee-extension",
+     "reps": 9,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2025-11-24T10:31:08Z",
+     "exerciseID": "heel-slide",
+     "reps": 11,
+     "painLevel": 3
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 24,
+    "adherenceRatio": 0.0,
+    "avgPainLast7": 4.857142857142857,
+    "painTrend": -0.4761904761904763,
+    "completionRatio": 0.8269230769230769,
+    "currentStreak": 0
+   }
+  },
+  {
+   "name": "simulated patient 11, week 5",
+   "today": "2024-06-10T23:59:59Z",
+   "logs": [
+    {
+     "timestamp": "2024-05-08T15:57:29Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 6
+    },
+    {
+     "timestamp": "2024-05-08T16:00:34Z",
+     "exerciseID": "heel-slide",
+     "reps": 9,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-05-09T14:52:59Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-05-09T14:55:59Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-05-11T18:34:56Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-05-11T18:38:27Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-05-13T16:49:01Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-05-14T16:22:07Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 5
+    },
+    {
+     "timestamp": "2024-05-14T16:24:40Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-05-16T16:45:45Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-05-16T16:48:05Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 4
+    },
+    {
+     "timestamp": "2024-05-19T17:34:44Z",
+     "exerciseID": "knee-extension",
+     "reps": 11,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-05-19T17:37:28Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-05-22T15:27:51Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 2
+    },
+    {
+     "timestamp": "2024-05-23T16:46:23Z",
+     "exerciseID": "knee-extension",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-05-23T16:49:27Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-05-29T15:17:23Z",
+     "exerciseID": "knee-extension",
+     "reps": 14,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-05-29T15:19:39Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-06-03T17:00:48Z",
+     "exerciseID": "knee-extension",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-03T17:03:38Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-06-06T16:47:52Z",
+     "exerciseID": "heel-slide",
+     "reps": 12,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-08T15:30:41Z",
+     "exerciseID": "knee-extension",
+     "reps": 12,
+     "painLevel": 1
+    },
+    {
+     "timestamp": "2024-06-09T13:34:17Z",
+     "exerciseID": "knee-extension",
+     "reps": 13,
+     "painLevel": 3
+    },
+    {
+     "timestamp": "2024-06-09T13:37:15Z",
+     "exerciseID": "heel-slide",
+     "reps": 15,
+     "painLevel": 1
+    }
+   ],
+   "expected": {
+    "daysSinceStart": 33,
+    "adherenceRatio": 0.42857142857142855,
+    "avgPainLast7": 1.8571428571428572,
+    "painTrend": -1.833333333333333,
+    "completionRatio": 1.0,
+    "currentStreak": 2
+   }
+  }
+ ]
+}

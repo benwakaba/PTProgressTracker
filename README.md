@@ -8,8 +8,9 @@ session data, and visualizing recovery over time.
 - **SwiftUI** for all UI (iOS 17+)
 - **Core Data** for local persistence of exercise logs (`PTProgressTracker.xcdatamodeld`)
 - **Swift Charts** for pain-trend, daily-volume, and exercise-breakdown visualizations
-- **CoreML** for an on-device "recovery on track?" prediction, trained via **CreateML**
-  on synthetic data
+- **CoreML** for an on-device "recovery on track?" estimate: a logistic model trained in
+  scikit-learn on simulated patients, exported with coremltools
+  ([the simulation study](MLTraining/README.md))
 
 ## Project layout
 
@@ -18,17 +19,18 @@ PTProgressTracker/
   App/                   App entry point
   CoreData/              PersistenceController
   Models/                Exercise library (static data) + Core Data model extensions
-  ML/                    RecoveryPredictor.swift + trained RecoveryGoalClassifier.mlmodel
+  ML/                    RecoveryPredictor.swift, RecoveryGoalClassifier.mlmodel, and
+                         RecoveryModelPolicy.swift (generated: calibration + threshold)
   Views/
     Shared/    RootView (TabView), HomeView, AnimatedExerciseDiagram
     Library/   Exercise browsing + detail
     Session/   Log-a-session form, session history
     Progress/  Swift Charts dashboards
 PTProgressTracker.xcdatamodeld/   Core Data model
-PTProgressTrackerTests/           Unit tests (streak logic, ML wrapper)
-MLTraining/
-  generate_synthetic_data.py      Synthetic patient logging data generator
-  train_model.swift               CreateML training script -> RecoveryGoalClassifier.mlmodel
+PTProgressTrackerTests/           Unit tests (streaks, predictor, Python/Swift feature parity)
+  Fixtures/                       feature_parity_cases.json, written by MLTraining
+MLTraining/                       Simulation study: simulator, evaluation, CoreML export
+                                  (see MLTraining/README.md)
 project.yml                       XcodeGen spec (this repo has no committed .xcodeproj)
 ```
 
@@ -44,20 +46,69 @@ xcodegen generate
 open PTProgressTracker.xcodeproj
 ```
 
-## Retraining the CoreML model
+## Recovery estimate: a simulation study
 
-`PTProgressTracker/ML/RecoveryGoalClassifier.mlmodel` is already trained and checked in
-(~77% held-out accuracy on synthetic data). To regenerate it:
+The Home tab's "on track / needs attention" card comes from a model trained on **simulated**
+patients. No public dataset links PT exercise logs to recovery outcomes.
+[MLTraining/README.md](MLTraining/README.md) documents the generative process, the evaluation, and a
+check against published outcome data. In short:
 
-```bash
-cd MLTraining
-python3 generate_synthetic_data.py     # writes synthetic_recovery_data.csv
-swift train_model.swift                # trains + writes ../PTProgressTracker/ML/RecoveryGoalClassifier.mlmodel
-```
+- **What it predicts.** At each weekly check-in, the probability that the patient will *not* reach a
+  30% pain reduction by week 6, a clinically important change (Farrar et al. 2001). Inputs are the six
+  `RecoveryFeatures` computed from the patient's logs. Python and Swift compute them identically,
+  enforced by a shared test fixture.
+- **How it was tested.** By patient and by time, never by row. It was trained on patients whose
+  outcomes were known before a cutoff date, then scored once on 753 patients who enrolled after it.
+- **How to read the numbers.** They are a best case under the study's stated assumptions, because the
+  training and test data come from the same simulator.
 
-`RecoveryPredictor.swift` computes the model's six input features (adherence ratio,
-pain trend, completion ratio, streak, days since start) from a patient's logged
-`ExerciseLog` history and surfaces an on-track / needs-attention card on the Home tab.
+| Test cohort | Shipped model | Baseline |
+|---|---|---|
+| AUROC | 0.788 (95% CI 0.760-0.815) | 0.5 |
+| Accuracy | 73.7% | 59.2%: always "on track" (the base rate; 40.8% are off track) |
+| Balanced accuracy | 73.9% | 63.4%: rule "adherence < 50% or pain rising" |
+
+At the shipped threshold, over the 2,784 check-ins where a card is shown:
+
+|  | Flagged | Not flagged |
+|---|---|---|
+| **Actually off track** | 850 | 286 |
+| **Actually on track** | 446 | 1,202 |
+
+| Class | Precision | Recall |
+|---|---|---|
+| Off track (flagged) | 65.6% | 74.8% |
+| On track (not flagged) | 80.8% | 72.9% |
+
+**Calibration.** The probabilities are right on average in development, but the model can't tell acute
+from persistent pain well. Once the case mix shifted toward persistent pain, it underestimated risk:
+35.5% predicted vs 40.4% observed on the later cohort. Only the time-based split exposed this; AUROC
+didn't move. See the [reliability curve](MLTraining/results/figures/reliability.png).
+
+**Threshold.** The card flags a patient at P(off track) >= 1/3. That is the expected-cost threshold when
+missing an off-track patient costs twice a false alarm, and it was checked patient by patient on
+development data. The card also waits for 7 days of history, because week-1 predictions are weak
+(AUROC 0.65).
+
+### Error analysis
+
+- **Misses are the dangerous errors.** They are mostly persistent-pain patients who exercise regularly
+  but whose pain eases too slowly: 73% had persistent pain, they exercised on 67% of days, and 46%
+  finished 20-29% improved, just short of the bar. They need their plan reviewed, not a reminder to log,
+  and when the card does flag such a patient it now says so. 5% of off-track patients are shown a card,
+  never flagged, and improve less than 10%.
+- **False alarms are annoying but frequent.** They are mostly acute-pain patients with patchy exercise
+  who recover anyway, plus pain flares. Over five check-ins, 45% of on-track patients see at least one.
+  That is why the card reads as a nudge rather than a warning, and why the threshold isn't lower.
+- **The biggest blind spot isn't the model.** Patients with fewer than 3 logs get no card at all, and they
+  are the highest-risk group (67% off track). A rule-based prompt for sparse logging would reach them.
+
+The study also finds that the pain features carry nearly all of the signal (AUROC 0.787 on their own).
+And the simulated long-term pain course fails the check against published data unless exercise has
+little lasting effect. Details are in the study README.
+
+To rerun: `cd MLTraining && python3 run_study.py` (about a minute). The study README covers the tests
+and the CoreML export.
 
 ## Design notes / deliberate simplifications
 
@@ -80,7 +131,22 @@ pain trend, completion ratio, streak, days since start) from a patient's logged
 - `PTProgressTrackerTests` covers streak-calculation edge cases and the
   `RecoveryPredictor` feature pipeline (nil below 3 logs, non-nil above).
 
-Note: this machine's Xcode/CoreSimulator device-discovery got into a stale state
+For the simulation study and the model now in the app:
+
+- `python3 -m pytest` in `MLTraining/`: 25 tests pass. They cover the feature contract, splits
+  (no patient on both sides, embargo respected, no look-ahead) and simulator invariants.
+- The exported `.mlmodel` reproduces the scikit-learn probabilities on all 3,411 test check-ins
+  (largest difference 2.2e-16).
+- `xcodebuild build-for-testing` succeeds for the iOS 27 Simulator SDK.
+- `xcodebuild test` on an iPhone 17 simulator (iOS 26.5): all 8 Swift tests pass. They include
+  `FeatureParityTests` (Swift matches Python on 32 log histories to 1e-9) and a check that the shipped
+  model flags a declining patient but not an improving one.
+- In the simulator, three backdated sessions with rising pain and 2 of 7 days logged produce a
+  "Recovery pace needs attention" card. It shows the adherence rationale and the new estimate caption.
+
+Note: after the Xcode 27 update, `xcodebuild` reported "CoreSimulator is out of date" and disabled
+simulators until Xcode's first-launch install had run (`sudo xcodebuild -runFirstLaunch`, or open
+Xcode.app once). Earlier, this machine's Xcode/CoreSimulator device-discovery got into a stale state
 mid-session (`iOS 26.5 is not installed` / CoreSimulator version-mismatch errors from
 `xcodebuild -destination`), which blocked running `xcodebuild test` and the Simulator
 MCP tool for the remainder of the session — `xcrun simctl` still worked directly. If

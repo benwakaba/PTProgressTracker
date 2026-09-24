@@ -16,3 +16,9 @@ Pods/
 
 # macOS
 .DS_Store
+
+# ML training (MLTraining/README.md): local env and regenerable model artifacts
+MLTraining/.venv/
+MLTraining/artifacts/
+__pycache__/
+.pytest_cache/

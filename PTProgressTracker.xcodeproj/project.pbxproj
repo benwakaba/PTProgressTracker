@@ -18,9 +18,12 @@
 		5A1B96C1A858975C84B5EF27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 265DBF080C5E2254A9306E65 /* Assets.xcassets */; };
 		5B3C5F40EFF37817A9465395 /* ProgressChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5EC7676E611BA5861E4DC9 /* ProgressChartsView.swift */; };
 		72A807FCAE5ACA2C2F2974B3 /* ExercisePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FF327D11AD1114E1D3804A /* ExercisePhoto.swift */; };
+		82C7E728FDAA5CEE4C5CC3DB /* FeatureParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD712F06A0CC35846473B67C /* FeatureParityTests.swift */; };
 		88824F936A9596D5D0CE723E /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAAE8FFC767C44E89D9AC9D /* PersistenceController.swift */; };
+		9411EA4DFF6CDF7DC475C6DE /* feature_parity_cases.json in Resources */ = {isa = PBXBuildFile; fileRef = 386F4659D3687356E44FC20D /* feature_parity_cases.json */; };
 		A2DBC93E2A9D61102FD868B2 /* PTProgressTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0F4C136FB09E5CB8F61FF8A /* PTProgressTracker.xcdatamodeld */; };
 		B0AC0DE34B8F8C898310358C /* LogSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C05CB0143950600383B7BD /* LogSessionView.swift */; };
+		C13FC2025A4E81BB074FA376 /* RecoveryModelPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326DB80D16965931D21862F7 /* RecoveryModelPolicy.swift */; };
 		D61FAC9C307A46D536B27ABC /* PTProgressTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F40EB8E782A67BEF14938 /* PTProgressTrackerApp.swift */; };
 		E693F263F44B981416BA6FDF /* RecoveryGoalClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 6054E6842F9A6A357191B4E6 /* RecoveryGoalClassifier.mlmodel */; };
 		E6BB82E9B8341E99821D6AAD /* StreakCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D37BF43D65C5F08DDCC5158 /* StreakCalculator.swift */; };
@@ -44,6 +47,8 @@
 		27E9CB97EB0A3A67EC726FBD /* PTProgressTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PTProgressTracker.xcdatamodel; sourceTree = "<group>"; };
 		29551D7D13A2DF94A0C44A05 /* PTProgressTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTProgressTrackerTests.swift; sourceTree = "<group>"; };
 		3138F9B8F90ED60FBB7C0FA7 /* ExerciseLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseLog+Extensions.swift"; sourceTree = "<group>"; };
+		326DB80D16965931D21862F7 /* RecoveryModelPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryModelPolicy.swift; sourceTree = "<group>"; };
+		386F4659D3687356E44FC20D /* feature_parity_cases.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = feature_parity_cases.json; sourceTree = "<group>"; };
 		5923623E2BC91DFF5050CA2C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5CD5B7CBBABABBE6E17F6676 /* RecoveryPredictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPredictor.swift; sourceTree = "<group>"; };
 		6054E6842F9A6A357191B4E6 /* RecoveryGoalClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = RecoveryGoalClassifier.mlmodel; sourceTree = "<group>"; };
@@ -56,6 +61,7 @@
 		9F7F40EB8E782A67BEF14938 /* PTProgressTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTProgressTrackerApp.swift; sourceTree = "<group>"; };
 		A2FF327D11AD1114E1D3804A /* ExercisePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePhoto.swift; sourceTree = "<group>"; };
 		AC2AA16BC243303225BC7665 /* PTProgressTracker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PTProgressTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD712F06A0CC35846473B67C /* FeatureParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureParityTests.swift; sourceTree = "<group>"; };
 		C5C05CB0143950600383B7BD /* LogSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSessionView.swift; sourceTree = "<group>"; };
 		D3CF874E3D56A63C3CB48A5D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		DDAAE8FFC767C44E89D9AC9D /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -149,10 +155,19 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		83B98D23743F62B647EFF816 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				386F4659D3687356E44FC20D /* feature_parity_cases.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
 		90E41D5A1EB0CB283BC06C41 /* ML */ = {
 			isa = PBXGroup;
 			children = (
 				6054E6842F9A6A357191B4E6 /* RecoveryGoalClassifier.mlmodel */,
+				326DB80D16965931D21862F7 /* RecoveryModelPolicy.swift */,
 				5CD5B7CBBABABBE6E17F6676 /* RecoveryPredictor.swift */,
 			);
 			path = ML;
@@ -161,7 +176,9 @@
 		AA8239BCB2023A5855BF05D2 /* PTProgressTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				BD712F06A0CC35846473B67C /* FeatureParityTests.swift */,
 				29551D7D13A2DF94A0C44A05 /* PTProgressTrackerTests.swift */,
+				83B98D23743F62B647EFF816 /* Fixtures */,
 			);
 			path = PTProgressTrackerTests;
 			sourceTree = "<group>";
@@ -220,6 +237,7 @@
 			buildConfigurationList = 49466F92DF5DFA3DEBC68240 /* Build configuration list for PBXNativeTarget "PTProgressTrackerTests" */;
 			buildPhases = (
 				51DC474EE541D820DE6C084C /* Sources */,
+				E4A870C8E2AA6B69DF773106 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -281,6 +299,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4A870C8E2AA6B69DF773106 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9411EA4DFF6CDF7DC475C6DE /* feature_parity_cases.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -288,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82C7E728FDAA5CEE4C5CC3DB /* FeatureParityTests.swift in Sources */,
 				0FAD9C4B67B9A113206AD31A /* PTProgressTrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +336,7 @@
 				88824F936A9596D5D0CE723E /* PersistenceController.swift in Sources */,
 				5B3C5F40EFF37817A9465395 /* ProgressChartsView.swift in Sources */,
 				E693F263F44B981416BA6FDF /* RecoveryGoalClassifier.mlmodel in Sources */,
+				C13FC2025A4E81BB074FA376 /* RecoveryModelPolicy.swift in Sources */,
 				F260D3FA49EF12A7D51B7F97 /* RecoveryPredictor.swift in Sources */,
 				332398B31E2429A904666DE0 /* RootView.swift in Sources */,
 				0E2CDAE69ADEE8D3EDE0CC43 /* SessionHistoryView.swift in Sources */,
