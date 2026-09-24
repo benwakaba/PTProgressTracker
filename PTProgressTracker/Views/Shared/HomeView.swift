@@ -136,6 +136,9 @@ private struct PredictionCard: View {
                 Text(prediction.rationale)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                Text("Estimate from a model trained on simulated patients, not medical advice.")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
             }
             Spacer()
         }
